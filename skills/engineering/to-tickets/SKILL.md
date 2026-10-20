@@ -31,11 +31,16 @@ Break the work into **tracer bullet** tickets.
 - Each slice cuts a narrow but COMPLETE path through every layer (schema, API, UI, tests): vertical, NOT a horizontal slice of one layer
 - A completed slice is demoable or verifiable on its own
 - Each slice is sized to fit in a single fresh context window
-- Any prefactoring should be done first
+- Reuse existing seams where they support the behavior; include only prefactoring needed to make the slice safe and demonstrable
+- Identify the first slice that can be demoed end to end before expanding into parallel work
+- Every ticket has an observable demo or test for its end-to-end behavior
+- Reject a horizontal ticket unless there is a concrete reason a vertical slice cannot land safely; use the wide-refactor exception below when it applies
 
 </vertical-slice-rules>
 
-Give each ticket its **blocking edges**: the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
+Give each ticket its **blocking edges**: code prerequisites and unresolved decisions that genuinely prevent implementation. Record business decisions and activation or rollout gates separately; an activation gate does not block implementation. A ticket with no code or decision blockers can start immediately.
+
+An expected pull-request range is a review signal, not a hard cap. If the decomposition would materially exceed the agreed delivery shape, replan the slices with the user before publishing. Do not create a ticket or pull request for every subagent assignment: ownership can be tracked within a slice.
 
 **Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
 
@@ -52,6 +57,9 @@ Ask the user:
 - Does the granularity feel right? (too coarse / too fine)
 - Are the blocking edges correct: does each ticket only depend on tickets that genuinely gate it?
 - Should any tickets be merged or split further?
+- Is the proposed pull-request range right? Treat it as a review signal, not a cap.
+
+Keep the first demoable slice clear and avoid splitting work further when a coherent, independently reviewable change would be lost.
 
 Iterate until the user approves the breakdown.
 
@@ -72,7 +80,11 @@ Do NOT close or modify any parent issue.
 
 **What to build:** the end-to-end behaviour this ticket makes work, from the user's perspective, not a layer-by-layer implementation list.
 
-**Blocked by:** the numbers/titles of the tickets that gate this one, or "None (can start immediately)".
+**Blocked by:** the numbers/titles of code prerequisites or unresolved decisions that prevent implementation, or "None (no code or decision blockers)".
+
+**Business decisions and activation gates:** list separately when relevant, or "None".
+
+**Demo:** the observable end-to-end behavior that proves this slice works.
 
 **Status:** ready-for-agent
 
@@ -90,6 +102,10 @@ A reference to the parent issue on the tracker (if the source was an existing is
 ## What to build
 
 The end-to-end behaviour this ticket makes work, from the user's perspective, not layer-by-layer implementation.
+
+## Demo
+
+The observable end-to-end behavior that proves this slice works.
 
 ## Acceptance criteria
 

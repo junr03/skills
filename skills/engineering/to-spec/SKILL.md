@@ -20,6 +20,15 @@ Check with the user that these seams match their expectations.
 
 <spec-template>
 
+## Delivery Contract
+
+- **Accepted scope:** the user-visible behavior agreed with the user, plus explicit exclusions. Do not add capabilities inferred from the codebase.
+- **First demo:** the narrowest complete behavior to demonstrate before expanding into parallel work, with its observable result and existing seam where known.
+- **Seam reuse:** the existing boundary to reuse, or the reason a new one is necessary.
+- **Expected pull-request range:** repeat the range if it was agreed; otherwise mark it as a proposal for the user to review during ticket breakdown. It is a review signal, not a hard cap.
+- **Replan trigger:** pause and revisit the delivery shape before materially exceeding the accepted scope or expected range.
+- **Dependencies:** list code prerequisites, unresolved business decisions, and activation or rollout gates separately. Only prerequisites that prevent implementation are blocking edges downstream.
+
 ## Problem Statement
 
 The problem that the user is facing, from the user's perspective.
@@ -30,7 +39,7 @@ The solution to the problem, from the user's perspective.
 
 ## User Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+A concise, numbered list of user stories for the accepted scope. Do not infer extra stories from capabilities that were not requested. Each user story should be in the format of:
 
 1. As an <actor>, I want a <feature>, so that <benefit>
 
@@ -38,7 +47,7 @@ A LONG, numbered list of user stories. Each user story should be in the format o
 1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
 </user-story-example>
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+Cover the accepted behavior completely without padding the list with speculative capabilities.
 
 ## Implementation Decisions
 
