@@ -18,13 +18,17 @@ Reach for it at the start of a change, in a repo, when the plan is still fuzzy a
 | A repo with no domain docs at all, and no particular feature in mind | `grill-with-docs`, aimed at the repo rather than a change |
 | A decision blocked on knowledge in someone else's head | [to-questionnaire](https://aihero.dev/skills-to-questionnaire) |
 
-The wayfinder split comes down to session count: `/grill-with-docs` for single-session planning, `/wayfinder` for multi-session planning.
+The wayfinder split comes down to session count: `/grill-with-docs` for single-session planning, `/wayfinder` for multi-session planning. In either path, settle the accepted behavior and name the smallest complete slice to demonstrate first. Codebase discoveries can inform the discussion, but do not silently expand the scope.
 
 ## Prerequisites
 
 The skill writes into your repo, so you need to be somewhere it is safe to write. Resolved terms go to a `GLOSSARY.md` glossary at the root, or to the relevant context's `GLOSSARY.md`, if a `GLOSSARY-MAP.md` at the root marks the repo as multi-context. Decisions go to `docs/adr/`. The skill creates both only when it needs them. Nothing exists until the first term or decision is settled, so you set up nothing in advance.
 
 It also needs two other skills present, because its own `SKILL.md` is one line that delegates to them. [grilling](https://aihero.dev/skills-grilling) supplies the interview, and [domain-modeling](https://aihero.dev/skills-domain-modeling) supplies the writing. Installing `grill-with-docs` alone gets you a skill that does not work.
+
+## The first slice
+
+As you settle the plan, identify the narrowest complete behavior that can be demonstrated end to end and the existing seams it can reuse. Treat a pull-request size estimate as a prompt to review the slice, not a limit. If the plan grows materially beyond the agreed delivery shape, return to the plan before expanding.
 
 ## The paper trail
 

@@ -28,7 +28,13 @@ A **horizontal** slice ships one layer of the change. Nothing works until every 
 
 This is the rule people break most often. One team ran a 26-ticket stack sliced by layer (corpus, producer, aggregator, selector) and got roughly twenty agent runs per closed ticket, about three quarters of them rework. Their own post-mortem traced every failure class back to the horizontal slicing rather than to the implementations.
 
-Two things happen before anything is published. `to-tickets` looks for prefactoring (the principle "make the change easy, then make the easy change") and orders that work first. Then it presents the breakdown as a numbered list and quizzes you on it: is the granularity right, are the blocking edges real, should anything merge or split. Nothing reaches the tracker until you approve, and that quiz is the place to push back.
+Before anything is published, `to-tickets` presents the breakdown as a numbered list and quizzes you on it: is the granularity right, are the blocking edges real, should anything merge or split. It includes prefactoring only when needed to make a slice safe and demonstrable. Nothing reaches the tracker until you approve.
+
+## Keep the delivery map small
+
+Start with the first complete slice that can be demonstrated, then add only accepted follow-on behavior. Every ticket needs an observable end-to-end demo or test. Reject a horizontal ticket unless there is a concrete reason a vertical slice cannot land safely. Do not create a ticket or pull request for every [subagent](https://www.aihero.dev/ai-coding-dictionary/subagent) assignment; assignments can be tracked within a slice. An expected pull-request range is a signal to revisit slice boundaries, not a hard cap. If the proposed map materially exceeds the agreed delivery shape, replan it before publishing.
+
+Separate code prerequisites, unresolved business decisions that prevent implementation, and activation or rollout gates. Put only the first two in blocking edges; list activation gates separately. Confirm the proposed pull-request range during the ticket quiz; if the user has not agreed to one, treat it as a proposal. A ticket with no code or decision blockers can start immediately. Once the first slice is demonstrated, independent accepted slices can be expanded in parallel when their boundaries stay coherent.
 
 ## Blocking edges
 

@@ -21,6 +21,14 @@ Reach for it when the build is too big for one agent [session](https://www.aiher
 
 `to-spec` publishes the spec as an issue, so [setup-matt-pocock-skills](https://aihero.dev/skills-setup-matt-pocock-skills) must first configure a tracker and the triage-label vocabulary for this repo. Either kind of tracker works: a real tracker like GitHub, or local markdown files under `.scratch/`, which work with no extra setup.
 
+## Keep the accepted scope
+
+Codebase exploration helps describe the solution, but it does not add unrequested capabilities to the spec. State the smallest complete behavior to demonstrate first and keep later behavior only when it was accepted. Separate code prerequisites from business decisions and activation or rollout gates; only the first kind belongs in implementation blocking edges. An agent assignment is ownership, not automatically a ticket or pull request.
+
+## The delivery contract
+
+The spec makes the accepted delivery shape explicit: what behavior is in scope, what is excluded, the first complete slice to demonstrate, which existing seam to reuse, and the expected pull-request range as a review signal, marked as a proposal when the user has not agreed to one yet. It also names when to replan before materially exceeding that shape. Code prerequisites, business decisions, and activation gates are kept distinct so later tickets do not mistake a rollout condition for implementation work.
+
 ## The spec is a decision record
 
 The spec exists because context windows end. You settled many things while [grilling](https://www.aihero.dev/ai-coding-dictionary/grilling): the shape of the solution, the choices you argued through, and what you deliberately refused. All of that is in one conversation that you are about to clear. The spec keeps it.

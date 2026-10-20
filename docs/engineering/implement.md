@@ -40,6 +40,10 @@ A run has five steps, in order:
 
 One run covers one ticket. The tickets [to-tickets](https://aihero.dev/skills-to-tickets) produces are tracer-bullet vertical slices sized to fit a single fresh [context window](https://www.aihero.dev/ai-coding-dictionary/context-window), so the intended rhythm is: clear context, implement one ticket, commit, clear again. Each ticket is self-contained, so you can discard the previous ticket's context.
 
+## Keep one coherent slice
+
+Implement only accepted behavior, reusing existing seams where possible. Demonstrate the first complete slice before expanding into parallel work. If the change would materially exceed the agreed delivery shape, pause to replan; a pull-request range is a review signal, not a cap. Keep required tests and reviews at coherent slice boundaries, and report what behavior works plus any remaining business decision or activation gate.
+
 ## Pre-agreed seams
 
 The skill's central idea is the **seam**, the public boundary you observe behaviour at without reaching inside. Tests live at seams. When the seam is agreed before any code exists, the tests last, and you can rewrite the implementation underneath without changing them.
