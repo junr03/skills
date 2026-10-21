@@ -33,6 +33,7 @@ Break the work into **tracer bullet** tickets.
 - Each slice is sized to fit in a single fresh context window
 - Reuse existing seams where they support the behavior; include only prefactoring needed to make the slice safe and demonstrable
 - Identify the first slice that can be demoed end to end before expanding into parallel work
+- Keep implementation assignments inside accepted tickets. Parallelize when dependencies, stable interfaces, and exclusive ownership make the work safe; do not impose an arbitrary concurrency cap
 - Every ticket has an observable demo or test for its end-to-end behavior
 - Reject a horizontal ticket unless there is a concrete reason a vertical slice cannot land safely; use the wide-refactor exception below when it applies
 
@@ -41,6 +42,10 @@ Break the work into **tracer bullet** tickets.
 Give each ticket its **blocking edges**: code prerequisites and unresolved decisions that genuinely prevent implementation. Record business decisions and activation or rollout gates separately; an activation gate does not block implementation. A ticket with no code or decision blockers can start immediately.
 
 An expected pull-request range is a review signal, not a hard cap. If the decomposition would materially exceed the agreed delivery shape, replan the slices with the user before publishing. Do not create a ticket or pull request for every subagent assignment: ownership can be tracked within a slice.
+
+For a coherent ticket with multiple implementation tasks, include a concise **Work breakdown** table inside the ticket. Give each row a stable work ID, a concrete deliverable, prerequisite work IDs or ticket references (or `None`), an owner, a state, and evidence criteria. Rows start with `Unassigned`, `Planned`, and explicit evidence criteria. Keep assignments inside the ticket; a row does not automatically become another ticket or pull request, and there is no required row count.
+
+The implementer maintains row ownership, state, and evidence during execution. Record a branch, exclusively owned files, or current blocker when useful, using paths confirmed during implementation rather than speculative planning. Mark a row verified only when its stated evidence is checked, not on an agent's report alone. A named checkpoint may unblock only the dependent work that needs it after its evidence is verified; it does not complete the ticket. Complete the ticket only when all acceptance criteria are verified.
 
 **Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change (rename a column, retype a shared symbol) whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket; green is promised only there.
 
@@ -88,6 +93,12 @@ Do NOT close or modify any parent issue.
 
 **Status:** ready-for-agent
 
+**Work breakdown:**
+
+| Work ID | Deliverable | Depends on | Owner | State | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| W1 | <concrete deliverable> | None | Unassigned | Planned | <evidence that will verify this work> |
+
 - [ ] Acceptance criterion 1
 - [ ] Acceptance criterion 2
 
@@ -116,6 +127,12 @@ The observable end-to-end behavior that proves this slice works.
 
 - A reference to each blocking ticket, or "None (can start immediately)". Omit this section when blockers were set as native edges.
 
+## Work breakdown
+
+| Work ID | Deliverable | Depends on | Owner | State | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| W1 | <concrete deliverable> | None | Unassigned | Planned | <evidence that will verify this work> |
+
 </issue-template>
 
-In either form, avoid specific file paths or code snippets: they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
+In either form, avoid speculative file paths or code snippets in planning text: they go stale fast. Runtime assignments may record confirmed paths, exclusive ownership, and branches when useful. If a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts, not a working demo, just the important bits.
