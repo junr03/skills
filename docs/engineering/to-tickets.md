@@ -1,6 +1,6 @@
 ## What it does
 
-`to-tickets` takes a plan, a [spec](https://www.aihero.dev/ai-coding-dictionary/spec), or the conversation you are in, and breaks it into a set of **[tickets](https://www.aihero.dev/ai-coding-dictionary/ticket)** on your issue tracker. Each ticket declares its **blocking edges**: the other tickets that have to finish before it can start.
+`to-tickets` takes a plan, a [spec](https://www.aihero.dev/ai-coding-dictionary/spec), or the conversation you are in, and breaks it into a set of **[tickets](https://www.aihero.dev/ai-coding-dictionary/ticket)** on your issue tracker. Each ticket declares its **blocking edges**: the other tickets that must finish before the ticket starts, except when a named, verified checkpoint is enough for specific dependent work to begin.
 
 Every ticket is a **tracer bullet**: a narrow but complete path through every layer of the change (schema, API, UI, tests) that you can demo on its own as soon as it lands. This is what makes the skill different from the obvious way to split work, which is to cut one layer at a time and integrate at the end. It also sizes each ticket to fit in a single fresh [context window](https://www.aihero.dev/ai-coding-dictionary/context-window), because a [session](https://www.aihero.dev/ai-coding-dictionary/session) that has never seen your spec will pick the ticket up.
 
@@ -35,6 +35,10 @@ Before anything is published, `to-tickets` presents the breakdown as a numbered 
 Start with the first complete slice that can be demonstrated, then add only accepted follow-on behavior. Every ticket needs an observable end-to-end demo or test. Reject a horizontal ticket unless there is a concrete reason a vertical slice cannot land safely. Do not create a ticket or pull request for every [subagent](https://www.aihero.dev/ai-coding-dictionary/subagent) assignment; assignments can be tracked within a slice. An expected pull-request range is a signal to revisit slice boundaries, not a hard cap. If the proposed map materially exceeds the agreed delivery shape, replan it before publishing.
 
 Separate code prerequisites, unresolved business decisions that prevent implementation, and activation or rollout gates. Put only the first two in blocking edges; list activation gates separately. Confirm the proposed pull-request range during the ticket quiz; if the user has not agreed to one, treat it as a proposal. A ticket with no code or decision blockers can start immediately. Once the first slice is demonstrated, independent accepted slices can be expanded in parallel when their boundaries stay coherent.
+
+## Work inside a ticket
+
+When one coherent ticket contains several implementation assignments, a small **Work breakdown** table keeps ownership and progress visible without splitting the work into more tickets or pull requests. Give each row a stable ID, a concrete deliverable, prerequisite work IDs or ticket references, an owner, a state, and evidence criteria. Rows begin unassigned and planned. The implementer maintains them as work proceeds; record confirmed branch and exclusive file ownership, or the current blocker, when useful. Keep planned paths out until implementation confirms them. Mark a row verified only after checking its evidence. A verified checkpoint can release only the work that depends on it, and never marks the whole ticket complete. The ticket is complete only when all acceptance criteria are verified. Parallelize where dependencies, stable interfaces, and exclusive ownership support it, with no arbitrary concurrency limit.
 
 ## Blocking edges
 
@@ -83,14 +87,15 @@ A very large spec can outgrow what a tracker issue serves back cleanly. There is
 The template asks for criteria and says nothing about whether they can fail, so this happens. Three shapes recur: a criterion already true at the base commit, a criterion that only work in another ticket can satisfy, and one that restates the request rather than deriving from the artifact. Vertical slicing prevents most of it, because a slice that delivers new behaviour fails at the base commit by construction. The check is still worth doing by hand. For each criterion, name the observation that would show it false, and confirm it fails at the commit the implementer starts from.
 
 **The tickets are published. How do I actually run them?**
-The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is manual: look at the board, count the tickets with no open blockers, and open that many agent sessions. Give each ticket a fresh context, and clear between them. [implement](https://aihero.dev/skills-implement) does not reliably close or check off the ticket when it finishes, on GitHub or in local markdown, so you update the ticket's state yourself.
+The skill stops at the artifact, and there is no auto-dispatch mode. Dispatch is manual: look at the board, count the tickets with no open blockers, and open that many agent sessions. Give each ticket a fresh context, and clear between them. The implementer keeps work breakdown rows current as assignments proceed. Closing or checking off the tracker ticket is separate; [implement](https://aihero.dev/skills-implement) does not reliably do that when it finishes, so update the ticket's state yourself.
 
 ## It's working if
 
 - Every ticket has an answer to "what can I demo when this is done?", and the answer is behaviour, not a layer.
 - The list comes back to you numbered, with a "Blocked by" line on each, before anything is published.
 - The ticket at the top has no blockers and can be started immediately.
-- Nothing in a ticket body is a file path or a line number, except a snippet a prototype produced.
+- Planning text avoids speculative file paths; runtime assignments may record confirmed paths and branches when useful.
+- Work breakdown rows stay inside their coherent ticket unless a real ticket-level prerequisite justifies a separate blocking edge.
 - Each ticket reads like something a fresh session could finish without you in the room.
 - Prefactoring, where it found any, is at the front of the order rather than mixed into feature tickets.
 
