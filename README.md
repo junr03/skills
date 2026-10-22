@@ -10,21 +10,23 @@
 
 # Skills For Real Engineers
 
-[![skills.sh](https://skills.sh/b/mattpocock/skills)](https://skills.sh/mattpocock/skills)
+> **This is a fork.** These skills were created by [Matt Pocock](https://github.com/mattpocock/skills) ([aihero.dev](https://www.aihero.dev)), and all credit for the originals goes to him. I (Jose Nino Rivera) forked them and adjusted them to my own engineering flows. It ships as its own plugin, `junr03-skills`, so it installs alongside or instead of the original. For the upstream skills, see [mattpocock/skills](https://github.com/mattpocock/skills).
 
-My agent skills that I use every day to do real engineering - not vibe coding.
+[![skills.sh](https://skills.sh/b/junr03/skills)](https://skills.sh/junr03/skills)
+
+Agent skills that I use every day to do real engineering - not vibe coding. The originals are Matt Pocock's; this fork adapts them to my flows.
 
 Developing real applications is hard. Approaches like GSD, BMAD, and Spec-Kit try to help by owning the process. But while doing so, they take away your control and make bugs in the process hard to resolve.
 
 These skills are designed to be small, easy to adapt, and composable. They work with any model. They're based on decades of engineering experience. Hack around with them. Make them your own. Enjoy.
 
-If you want to keep up with changes to these skills, and any new ones I create, you can join ~60,000 other devs on my newsletter:
+To follow the original skills and Matt's new ones, see his newsletter:
 
-[Sign Up To The Newsletter](https://www.aihero.dev/s/skills-newsletter)
+[Matt Pocock's Newsletter](https://www.aihero.dev/s/skills-newsletter)
 
 ## Installation (30-second setup)
 
-A plugin updates itself. [skills.sh](https://skills.sh/mattpocock/skills) copies editable files into your project, and you update them by hand. Pick one per agent, because installing both gives you every skill twice.
+A plugin updates itself. [skills.sh](https://skills.sh/junr03/skills) copies editable files into your project, and you update them by hand. Pick one per agent, because installing both gives you every skill twice.
 
 ### 1. Get the skills
 
@@ -32,10 +34,11 @@ A plugin updates itself. [skills.sh](https://skills.sh/mattpocock/skills) copies
 <summary><strong>Claude Code</strong></summary>
 
 ```bash
-claude plugin install mattpocock-skills@claude-plugins-official
+claude plugin marketplace add junr03/skills
+claude plugin install junr03-skills@junr03
 ```
 
-Updates itself by default.
+Updates itself, once you turn on auto-update for the `junr03` marketplace in `/plugin`.
 
 </details>
 
@@ -43,8 +46,8 @@ Updates itself by default.
 <summary><strong>Codex</strong></summary>
 
 ```bash
-codex plugin marketplace add mattpocock/skills
-codex plugin add mattpocock-skills@mattpocock
+codex plugin marketplace add junr03/skills
+codex plugin add junr03-skills@junr03
 ```
 
 Updates itself at startup.
@@ -55,8 +58,8 @@ Updates itself at startup.
 <summary><strong>GitHub Copilot</strong> (CLI and VS Code)</summary>
 
 ```bash
-copilot plugin marketplace add mattpocock/skills
-copilot plugin install mattpocock-skills@mattpocock
+copilot plugin marketplace add junr03/skills
+copilot plugin install junr03-skills@junr03
 ```
 
 Then, once, add to `~/.copilot/settings.json`:
@@ -64,12 +67,12 @@ Then, once, add to `~/.copilot/settings.json`:
 ```json
 {
   "extraKnownMarketplaces": {
-    "mattpocock": { "source": { "source": "github", "repo": "mattpocock/skills" }, "autoUpdate": true }
+    "junr03": { "source": { "source": "github", "repo": "junr03/skills" }, "autoUpdate": true }
   }
 }
 ```
 
-In VS Code, run **Chat: Install Plugin From Source** and enter `https://github.com/mattpocock/skills`. It updates daily.
+In VS Code, run **Chat: Install Plugin From Source** and enter `https://github.com/junr03/skills`. It updates daily.
 
 </details>
 
@@ -77,8 +80,8 @@ In VS Code, run **Chat: Install Plugin From Source** and enter `https://github.c
 <summary><strong>Gemini CLI</strong> (manual updates)</summary>
 
 ```bash
-gemini skills install https://github.com/mattpocock/skills.git --path skills/engineering
-gemini skills install https://github.com/mattpocock/skills.git --path skills/productivity
+gemini skills install https://github.com/junr03/skills.git --path skills/engineering
+gemini skills install https://github.com/junr03/skills.git --path skills/productivity
 ```
 
 Re-run both commands to update.
@@ -89,7 +92,7 @@ Re-run both commands to update.
 <summary><strong>Any other agent, or editable files</strong> (manual updates)</summary>
 
 ```bash
-npx skills@latest add mattpocock/skills -a <agent>  # cursor, opencode, devin, windsurf, amp, pi; omit -a to choose
+npx skills@latest add junr03/skills -a <agent>  # cursor, opencode, devin, windsurf, amp, pi; omit -a to choose
 ```
 
 When the installer asks which skills to take, include `setup-matt-pocock-skills`. To update, run `npx skills@latest update`, and re-run `add` to pick up new skills.

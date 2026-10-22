@@ -1,13 +1,13 @@
 {
-  "name": "mattpocock-skills",
+  "name": "junr03-skills",
   "version": "1.3.1",
-  "description": "Matt Pocock's agent skills for real engineering: grilling, spec/ticket flows, TDD, code review, domain modelling and more. Plug-and-play, not vibe coding.",
+  "description": "Fork of Matt Pocock's agent skills for real engineering: grilling, spec/ticket flows, TDD, code review, domain modelling and more. Plug-and-play, not vibe coding.",
   "author": {
-    "name": "Matt Pocock",
-    "url": "https://www.aihero.dev"
+    "name": "Jose Nino Rivera",
+    "url": "https://www.junr03.com"
   },
-  "homepage": "https://www.aihero.dev/s/skills-newsletter",
-  "repository": "https://github.com/mattpocock/skills",
+  "homepage": "https://www.junr03.com",
+  "repository": "https://github.com/junr03/skills",
   "license": "MIT",
   "keywords": [
     "engineering",
